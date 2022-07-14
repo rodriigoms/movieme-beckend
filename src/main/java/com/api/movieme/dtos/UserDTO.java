@@ -6,19 +6,19 @@ import javax.validation.constraints.Size;
 
 public class UserDTO {
 
-    @NotBlank
+    @NotBlank(message = "Nome é obrigatório.")
     @Size(max = 45)
     private String nome;
 
-    @NotBlank
+    @NotBlank(message = "E-mail é obrigatório.")
     @Size(max = 45)
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Senha é obrigatória.")
     @Size(max = 45)
     private String senha;
 
-    @NotBlank
+    @NotBlank(message = "Nome de usuário é obrigatório")
     @Size(max = 45)
     private String username;
 
