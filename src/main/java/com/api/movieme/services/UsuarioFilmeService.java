@@ -23,22 +23,13 @@ public class UsuarioFilmeService {
         return usuarioFilmeRepository.save(usuarioFilme);
     }
 
-    public List<Object[]> getMoviesByUser(Usuario usuario) {
-        return usuarioFilmeRepository.getUserMovies(usuario.getId());
-    }
-
     public UsuarioFilmesPageResponse getMoviesPageableFilter(int userId, Pageable pageable) {
         Page<Object[]> filmes = usuarioFilmeRepository.getUserMoviesPage(userId, pageable);
         List<UsuarioFilmeDTO> usuarioFilmeDTOList = new ArrayList<>();
 
 
         for (Object[] filme : filmes.getContent()) {
-            UsuarioFilmeDTO usuarioFilmeDTO = new UsuarioFilmeDTO();
-            usuarioFilmeDTO.setId((Integer) filme[0]);
-            usuarioFilmeDTO.setAno_lancamento((String) filme[1]);
-            usuarioFilmeDTO.setTitulo((String) filme[2]);
-            usuarioFilmeDTO.setGeneros((String) filme[3]);
-            usuarioFilmeDTO.setAvaliacao((Double) filme[4]);
+            UsuarioFilmeDTO usuarioFilmeDTO = convertObejctDbTOUsuarioFilme(filme);
             usuarioFilmeDTOList.add(usuarioFilmeDTO);
         }
 
@@ -49,5 +40,37 @@ public class UsuarioFilmeService {
         response.setTotalPages(filmes.getTotalPages());
 
         return response;
+    }
+
+    public List<UsuarioFilmeDTO> getUsuarioMovies(int userId) {
+        List<Object[]> filmes = usuarioFilmeRepository.getUserMovies(userId);
+        List<UsuarioFilmeDTO> usuarioFilmeDTOList = new ArrayList<>();
+
+
+        for (Object[] filme : filmes) {
+            UsuarioFilmeDTO usuarioFilmeDTO = convertObejctDbTOUsuarioFilme(filme);
+            usuarioFilmeDTOList.add(usuarioFilmeDTO);
+        }
+
+        return usuarioFilmeDTOList;
+    }
+
+    public List<UsuarioFilme> getUsuarioFilmesAvaliacao(int id) {
+        return usuarioFilmeRepository.findByUsuarioId(id);
+    }
+
+    public List<UsuarioFilme> getAllUsuarioFilmes() {
+        return usuarioFilmeRepository.findAll();
+    }
+
+    public UsuarioFilmeDTO convertObejctDbTOUsuarioFilme(Object[] objects) {
+        UsuarioFilmeDTO usuarioFilmeDTO = new UsuarioFilmeDTO();
+        usuarioFilmeDTO.setId((Integer) objects[0]);
+        usuarioFilmeDTO.setAno_lancamento((String) objects[1]);
+        usuarioFilmeDTO.setTitulo((String) objects[2]);
+        usuarioFilmeDTO.setGeneros((String) objects[3]);
+        usuarioFilmeDTO.setAvaliacao((Double) objects[4]);
+
+        return usuarioFilmeDTO;
     }
 }

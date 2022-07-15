@@ -82,4 +82,8 @@ public class FilmeService {
         return response;
     }
 
+    public Filme findById(int id) {
+        return filmeRepository.findById(id);
+    }
+
 }

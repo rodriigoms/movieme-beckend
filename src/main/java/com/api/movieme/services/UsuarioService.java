@@ -42,20 +42,4 @@ public class UsuarioService {
 
         return response;
     }
-
-    public Usuario loginComplete(LoginRequest request) {
-        List<Usuario> usuarios = usuarioRepository.findByEmailOrUsernameAndSenha(request.getLogin(), request.getLogin(), request.getSenha());
-
-        if (usuarios.isEmpty()) return null;
-
-        Usuario usuario = usuarios.get(0);
-        UsuarioResponse response = new UsuarioResponse();
-
-        response.setUsername(usuario.getUsername());
-        response.setId(usuario.getId());
-        response.setEmail(usuario.getEmail());
-        response.setNome(usuario.getNome());
-
-        return usuario;
-    }
 }
