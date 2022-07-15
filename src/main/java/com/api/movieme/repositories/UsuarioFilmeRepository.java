@@ -1,25 +1,24 @@
 package com.api.movieme.repositories;
 
+import com.api.movieme.dtos.FilmeUserDTO;
 import com.api.movieme.models.Filme;
-import com.api.movieme.models.Usuario;
 import com.api.movieme.models.UsuarioFilme;
 import com.api.movieme.models.UsuarioFilmeId;
-import com.api.movieme.responses.UsuarioFilmeResponse;
-import com.api.movieme.responses.UsuarioResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface UsuarioFilmeRepository extends JpaRepository<UsuarioFilme, UsuarioFilmeId> {
 
-    @Query
-    (
-            value = "select f from UsuarioFilme uf " +
-                    "inner join uf.filme f " +
-                    "where uf.usuario = :usuarioId"
-    )
-    List<Filme> getUserMovies(int usuarioId);
+
+    @Query(value = "select f.id as id, f.ano_lancamento as ano_lancamento, f.titulo as titulo, f.generos as generos, uf.avaliacao as avaliacao " +
+            "from usuario_filme as uf " +
+            "inner join filme as f on uf.filme_id = f.id " +
+            "where uf.usuario_id = :id", nativeQuery = true)
+    List<Object[]> getUserMovies(@Param(value = "id") int id);
 }
