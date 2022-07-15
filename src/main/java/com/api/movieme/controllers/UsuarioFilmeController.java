@@ -6,8 +6,11 @@ import com.api.movieme.models.Filme;
 import com.api.movieme.models.Usuario;
 import com.api.movieme.models.UsuarioFilme;
 import com.api.movieme.responses.ApiResponse;
+import com.api.movieme.responses.FilmePageResponse;
+import com.api.movieme.responses.UsuarioFilmesPageResponse;
 import com.api.movieme.services.UsuarioFilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class UsuarioFilmeController {
         return new ApiResponse(200, "Filme adicionado com sucesso", null);
     }
 
-    @PostMapping("/movies")
+    /*@PostMapping("/movies")
     public ApiResponse getMovies(@RequestBody Usuario usuario) {
         List<Object[]> filmes = usuarioFilmeService.getMoviesByUser(usuario);
         List<UsuarioFilmeDTO> response = new ArrayList<>();
@@ -42,5 +45,12 @@ public class UsuarioFilmeController {
             response.add(u);
         }
         return new ApiResponse(200, "Lista de filmes carregada com sucesso.", response);
+    }*/
+
+    @GetMapping("/movies")
+    public ApiResponse getUsuarioMoviesPages(@RequestParam(defaultValue = "") int userId, Pageable pageable) {
+        UsuarioFilmesPageResponse usuarioFilmesPageResponse = usuarioFilmeService.getMoviesPageableFilter(userId, pageable);
+
+        return new ApiResponse(200, "", usuarioFilmesPageResponse);
     }
 }
