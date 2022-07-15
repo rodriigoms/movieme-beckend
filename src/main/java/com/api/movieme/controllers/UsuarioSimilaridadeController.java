@@ -1,5 +1,6 @@
 package com.api.movieme.controllers;
 
+import com.api.movieme.dtos.UsuarioFilmeDTO;
 import com.api.movieme.models.Filme;
 import com.api.movieme.models.UsuarioFilme;
 import com.api.movieme.responses.ApiResponse;
@@ -24,7 +25,7 @@ public class UsuarioSimilaridadeController {
 
     @GetMapping("/by_user")
     public ApiResponse getSimilarityByUser(@RequestParam(defaultValue = "") int userId) {
-        List<Filme> filmeList = new ArrayList<>();
+        List<UsuarioFilmeDTO> filmeList = new ArrayList<>();
         filmeList =  usuarioSimilaridadeService.getFilmesSimilareByUser(userId);
 
         return new ApiResponse(200, "", filmeList);

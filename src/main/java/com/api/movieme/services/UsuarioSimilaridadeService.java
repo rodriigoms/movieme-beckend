@@ -20,23 +20,24 @@ public class UsuarioSimilaridadeService {
     @Autowired
     UsuarioSimilaridadeRepository usuarioSimilaridadeRepository;
 
-    public List<Filme> getFilmesSimilareByUser(int id){
+    public List<UsuarioFilmeDTO> getFilmesSimilareByUser(int id){
 
         Usuario usuario2;
 
 
         List<UsuarioFilme> allFilmesUsuario = usuarioFilmeService.getAllUsuarioFilmes();
 
-        List<Filme> filmesSimilares = new ArrayList<>();
+        List<UsuarioFilmeDTO> filmesSimilares = new ArrayList<>();
 
         for (UsuarioFilme usuarioFilme : allFilmesUsuario) {
             int usuario2_id = usuarioFilme.getId().getUsuarioId();
 
             if (!Objects.equals(id, usuario2_id)) {
-                List<Filme> resultFilmesSimilares = new ArrayList<>();
-                resultFilmesSimilares = encontraSimilares(id, usuario2_id);
-                if (resultFilmesSimilares != null) {
-                    filmesSimilares.addAll(resultFilmesSimilares);
+                List<UsuarioFilmeDTO> resultFilmesUsuario2 = new ArrayList<>();
+                double similaridade = encontraSimilares(id, usuario2_id);
+                if (similaridade > 0.8) {
+                    resultFilmesUsuario2 = usuarioFilmeService.getUsuarioMovies(usuario2_id);
+                    filmesSimilares.addAll(resultFilmesUsuario2);
                 }
             }
         }
@@ -45,17 +46,14 @@ public class UsuarioSimilaridadeService {
         return filmesSimilares;
     }
 
-    private List<Filme> encontraSimilares(int usuario_id, int usuario2_id){
+    private double encontraSimilares(int usuario_id, int usuario2_id){
 
         List<UsuarioFilme> filmesUsuario2 = usuarioFilmeService.getUsuarioFilmesAvaliacao(usuario2_id);
 
-        List<Filme> filmesSimilares = new ArrayList<>();
-        filmesSimilares = funcaoEuclidiana(usuario_id, filmesUsuario2);
-
-        return filmesSimilares;
+        return funcaoEuclidiana(usuario_id, filmesUsuario2);
     }
 
-    private List<Filme> funcaoEuclidiana(int usuario_id, List<UsuarioFilme> filmesUsuario2){
+    private double funcaoEuclidiana(int usuario_id, List<UsuarioFilme> filmesUsuario2){
         double resultado = 0;
         int aux = 0;
         List<Filme> filmes = new ArrayList<>();
@@ -72,23 +70,17 @@ public class UsuarioSimilaridadeService {
         }
 
         if (aux == 1)
-            return null;
+            return 0;
 
         for(int i=0; i< filmesUsuario1.size();i++){
             for(int j=0; j<filmesUsuario2.size();j++){
-                if (filmesUsuario1.get(i).getAvaliacao() == filmesUsuario2.get(j).getAvaliacao()) {
+                if (Objects.equals(filmesUsuario1.get(i).getId(), filmesUsuario2.get(j).getFilme().getId())) {
                     resultado = resultado + Math.pow((filmesUsuario1.get(i).getAvaliacao() - filmesUsuario2.get(j).getAvaliacao()), 2);
-                    Filme filme = new Filme();
-                    filme = filmeService.findById(filmesUsuario2.get(j).getId().getFilmeId());
-
-                    if (resultado > 8) {
-                        filmes.add(filme);
-                    }
                 }
             }
         }
 
-        return filmes;
+        return 1/(1 + Math.sqrt(resultado));
     }
 
 }
