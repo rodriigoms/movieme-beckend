@@ -21,7 +21,7 @@ public class UsuarioSimilaridadeService {
     UsuarioSimilaridadeRepository usuarioSimilaridadeRepository;
 
     public List<Filme> getFilmesSimilareByUser(int id){
-        List<UsuarioSimilaridade> resultado = new ArrayList<>();
+
         Usuario usuario2;
 
 
@@ -56,6 +56,7 @@ public class UsuarioSimilaridadeService {
     }
 
     private List<Filme> funcaoEuclidiana(int usuario_id, List<UsuarioFilme> filmesUsuario2){
+        double resultado = 0;
         int aux = 0;
         List<Filme> filmes = new ArrayList<>();
 
@@ -76,10 +77,13 @@ public class UsuarioSimilaridadeService {
         for(int i=0; i< filmesUsuario1.size();i++){
             for(int j=0; j<filmesUsuario2.size();j++){
                 if (filmesUsuario1.get(i).getAvaliacao() == filmesUsuario2.get(j).getAvaliacao()) {
+                    resultado = resultado + Math.pow((filmesUsuario1.get(i).getAvaliacao() - filmesUsuario2.get(j).getAvaliacao()), 2);
                     Filme filme = new Filme();
                     filme = filmeService.findById(filmesUsuario2.get(j).getId().getFilmeId());
 
-                    filmes.add(filme);
+                    if (resultado > 8) {
+                        filmes.add(filme);
+                    }
                 }
             }
         }
