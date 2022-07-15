@@ -1,18 +1,13 @@
 package com.api.movieme.services;
 
-import com.api.movieme.models.Filme;
 import com.api.movieme.models.Usuario;
-import com.api.movieme.models.UsuarioFilme;
 import com.api.movieme.repositories.UsuarioRepository;
 import com.api.movieme.requests.LoginRequest;
-import com.api.movieme.requests.UsuarioRequest;
 import com.api.movieme.responses.UsuarioResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UsuarioService {

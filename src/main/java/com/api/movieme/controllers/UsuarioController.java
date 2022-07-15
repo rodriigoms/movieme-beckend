@@ -1,11 +1,8 @@
 package com.api.movieme.controllers;
 
 import com.api.movieme.dtos.UserDTO;
-import com.api.movieme.models.Filme;
 import com.api.movieme.models.Usuario;
-import com.api.movieme.models.UsuarioFilme;
 import com.api.movieme.requests.LoginRequest;
-import com.api.movieme.requests.UsuarioRequest;
 import com.api.movieme.responses.ApiResponse;
 import com.api.movieme.responses.UsuarioResponse;
 import com.api.movieme.services.UsuarioService;
@@ -14,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)

@@ -1,7 +1,5 @@
 package com.api.movieme.repositories;
 
-import com.api.movieme.dtos.FilmeUserDTO;
-import com.api.movieme.models.Filme;
 import com.api.movieme.models.UsuarioFilme;
 import com.api.movieme.models.UsuarioFilmeId;
 import org.springframework.data.domain.Page;
@@ -12,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface UsuarioFilmeRepository extends JpaRepository<UsuarioFilme, UsuarioFilmeId> {

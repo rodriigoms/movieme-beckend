@@ -1,13 +1,9 @@
 package com.api.movieme.services;
 
-import com.api.movieme.dtos.FilmeUserDTO;
 import com.api.movieme.dtos.UsuarioFilmeDTO;
-import com.api.movieme.models.Filme;
 import com.api.movieme.models.Usuario;
 import com.api.movieme.models.UsuarioFilme;
 import com.api.movieme.repositories.UsuarioFilmeRepository;
-import com.api.movieme.responses.FilmePageResponse;
-import com.api.movieme.responses.FilmeResponse;
 import com.api.movieme.responses.UsuarioFilmesPageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UsuarioFilmeService {

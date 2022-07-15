@@ -1,18 +1,11 @@
 package com.api.movieme.controllers;
 
-import com.api.movieme.models.Filme;
-import com.api.movieme.models.Usuario;
-import com.api.movieme.requests.FilmePageRequest;
-import com.api.movieme.requests.LoginRequest;
-import com.api.movieme.requests.SimpleIdRequest;
 import com.api.movieme.responses.ApiResponse;
 import com.api.movieme.responses.FilmePageResponse;
 import com.api.movieme.responses.FilmeResponse;
 import com.api.movieme.services.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
