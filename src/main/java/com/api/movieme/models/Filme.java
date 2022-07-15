@@ -5,7 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +21,7 @@ public class Filme implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false)
     private String titulo;
 
     @Column(nullable = false)
@@ -28,10 +30,16 @@ public class Filme implements Serializable {
     @Column
     private String generos;
 
-    @OneToMany(mappedBy = "primaryKey.filme", cascade = CascadeType.ALL)
-    private Set<UsuarioFilme> usuarioFilme = new HashSet<>();
+    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsuarioFilme> usuariosFilme;
 
-    @OneToMany(mappedBy = "primaryKey.filme", cascade = CascadeType.ALL)
-    private Set<UsuarioRecomendacao> usuarioRecomendacao = new HashSet<>();
+    @OneToMany(mappedBy = "filme", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsuarioRecomendacao> usuariosRecomendacao;
+
+    @OneToMany(mappedBy = "filme1", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FilmeSimilaridade> filme1Similaridade;
+
+    @OneToMany(mappedBy = "filme2", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FilmeSimilaridade> filme2Similaridade;
 
 }

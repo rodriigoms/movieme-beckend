@@ -5,7 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,15 +34,15 @@ public class Usuario implements Serializable {
     @Column(nullable = false, length = 45)
     private String username;
 
-    @OneToMany(mappedBy = "primaryKey.usuario", cascade = CascadeType.ALL)
-    private Set<UsuarioFilme> usuarioFilme = new HashSet<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsuarioFilme> filmesUsuario;
 
-    @OneToMany(mappedBy = "primaryKey.usuario", cascade = CascadeType.ALL)
-    private Set<UsuarioRecomendacao> usuarioRecomendacao = new HashSet<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsuarioRecomendacao> filmesRecomendacao;
 
-    @OneToMany(mappedBy = "primaryKey.usuario1", cascade = CascadeType.ALL)
-    private Set<UsuarioSimilaridade> usuarioSimilaridade1 = new HashSet<>();
+    @OneToMany(mappedBy = "usuario1", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsuarioSimilaridade> usuarios2Similaridades;
 
-    @OneToMany(mappedBy = "primaryKey.usuario2", cascade = CascadeType.ALL)
-    private Set<UsuarioSimilaridade> usuarioSimilaridade2 = new HashSet<>();
+    @OneToMany(mappedBy = "usuario2", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UsuarioSimilaridade> usuarios1Similaridades;
 }

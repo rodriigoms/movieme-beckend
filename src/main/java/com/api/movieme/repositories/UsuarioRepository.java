@@ -30,6 +30,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     }
 
     List<Usuario> findByEmailOrUsernameAndSenha(String email, String username, String senha);
-//    @Query("SELECT p FROM movieme.usuario p WHERE LOWER(p.email)=LOWER(:login) or LOWER(username)=LOWER(:login) and p.senha=:senha")
-//    Usuario login(@Param("login") String login, @Param("senha") String senha);
 }

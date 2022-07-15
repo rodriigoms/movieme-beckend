@@ -1,52 +1,29 @@
 package com.api.movieme.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "usuario_similaridade")
-@AssociationOverrides({
-        @AssociationOverride(name = "usuario",
-                joinColumns = @JoinColumn(name = "usuario1_id")),
-        @AssociationOverride(name = "usuario",
-                joinColumns = @JoinColumn(name = "usuario2_id")) })
+@Getter
+@Setter
 public class UsuarioSimilaridade implements Serializable {
 
-    private UsuarioSimilaridadeId primaryKey = new UsuarioSimilaridadeId();
-
-    private float similaridade;
 
     @EmbeddedId
-    public UsuarioSimilaridadeId getPrimaryKey() {
-        return primaryKey;
-    }
+    private UsuarioSimilaridadeId id;
 
-    public void setPrimaryKey(UsuarioSimilaridadeId primaryKey) {
-        this.primaryKey = primaryKey;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("usuario1Id")
+    private Usuario usuario1;
 
-    public Usuario getUsuario1() {
-        return primaryKey.getUsuario1();
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("usuario2Id")
+    private Usuario usuario2;
 
-    public void setUsuario1(Usuario usuario1) {
-        primaryKey.setUsuario1(usuario1);
-    }
-
-    public Usuario getUsuario2() {
-        return primaryKey.getUsuario2();
-    }
-
-    public void setUsuario2(Usuario usuario2) {
-        primaryKey.setUsuario2(usuario2);
-    }
-
-    @Column(name = "similaridade")
-    public float getSimilaridade() {
-        return similaridade;
-    }
-
-    public void setSimilaridade(float similaridade) {
-        this.similaridade = similaridade;
-    }
+    @Column(name = "usuario_similaridade")
+    private double usuarioSimilaridade;
 }
